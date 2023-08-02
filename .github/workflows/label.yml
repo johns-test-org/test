@@ -42,9 +42,9 @@ jobs:
       - name: Get project data
 #         env:
 # #           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
-#           ORGANIZATION: john-legg
+#           ORGANIZATION: johns-test-org
 #           PROJECT_ID: 1
-#           PRIORITY_FIELD_ID: 52539592
+#           PRIORITY_FIELD_ID: 52546499
 #           ISSUE_ID: ${{ github.event.issue.number }}
 #           PRIORITY_VALUE: Nice
         run: echo Hello, world! $ISSUE_ID
@@ -83,7 +83,7 @@ jobs:
           organization: johns-test-org
           project_number: 1
           operation: read
-          field: 52539592
+          field: 52546499
           content_id: ${{ github.event.client_payload.command.resource.id }}
       - name: Output status
         run: |
