@@ -42,7 +42,7 @@ jobs:
         env:
 #           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
           ORGANIZATION: john-legg
-          PROJECT_NUMBER: 1
+          PROJECT_ID: 1
           PRIORITY_FIELD_ID: 52539592
           ISSUE_ID: ${{ github.event.issue.number }}
           PRIORITY_VALUE: Nice
@@ -72,7 +72,7 @@ jobs:
                   }
               }
               
-            }' -f project=$PROJECT_ID -f item=$ISSUE_ID -f status_field=$PRIORITY_FIELD_ID -f status_value=$PRIORITY_VALUE --silent
+            }' -f project=$PROJECT_ID -f item=$ISSUE_ID -f status_field=$PRIORITY_FIELD_ID -f status_value=$PRIORITY_VALUE 
             
           
       # Runs a single command using the runners shell
