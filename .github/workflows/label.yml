@@ -47,8 +47,8 @@ jobs:
         run: echo Hello, world! $ISSUE_ID
         
       - name: Set fields
-#         env:
-#           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+        env:
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
         run: |
           gh api graphql -f query='
             mutation (
