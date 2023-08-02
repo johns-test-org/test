@@ -21,7 +21,7 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   check_priority:
-    if: contains(github.event.issue.labels.*.name, '[Pri]'*)
+    if: starsWith(github.event.issue.labels.*.name, '[Pri]')
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
