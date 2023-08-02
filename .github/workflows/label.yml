@@ -32,12 +32,20 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    
+      - name: Get project data
+        env:
+#           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+          ORGANIZATION: john-legg
+          PROJECT_NUMBER: 1
+          PRIORITY_FIELD_ID: 52539592
+    
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo Hello, world!
+        run: echo Hello, world! $PRIORITY_FIELD_ID
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
