@@ -42,6 +42,7 @@ jobs:
           ORGANIZATION: john-legg
           PROJECT_NUMBER: 1
           PRIORITY_FIELD_ID: 52539592
+        run: echo Hello, world! $PRIORITY_FIELD_ID
           
       # Runs a single command using the runners shell
       - name: Run a one-line script
