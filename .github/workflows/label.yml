@@ -78,10 +78,11 @@ jobs:
         id: read_status
         uses: github/update-project-action@v2
         with:
-#           github_token: ${{ secrets.STATUS_UPDATE_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           organization: john-legg
           project_number: 1
           operation: read
+          field: 52539592
           content_id: ${{ github.event.client_payload.command.resource.id }}
       - name: Output status
         run: |
