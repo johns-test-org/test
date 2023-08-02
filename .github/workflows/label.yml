@@ -80,9 +80,9 @@ jobs:
         uses: github/update-project-action@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          organization: john-legg
+          owner: john-legg
           project_number: 1
-#           operation: read
+          operation: read
           field: 52539592
           content_id: ${{ github.event.client_payload.command.resource.id }}
       - name: Output status
