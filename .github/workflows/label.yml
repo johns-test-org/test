@@ -80,7 +80,7 @@ jobs:
         uses: github/update-project-action@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          owner: john-legg
+          organization: johns-test-org
           project_number: 1
           operation: read
           field: 52539592
