@@ -94,10 +94,10 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           organization: johns-test-org
-          project_number: 1
+          project_number: 2
           content_id: ${{ github.event.client_payload.command.resource.id }}
           field: Priority
-          value: ${{ github.event.client_payload.data.status }}
+          value: wow
           
       # Runs a single command using the runners shell
       - name: Run a one-line script
