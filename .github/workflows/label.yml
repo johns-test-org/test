@@ -39,13 +39,13 @@ jobs:
 #       - uses: actions/checkout@v3
       
       - name: Get project data
-        env:
-#           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
-          ORGANIZATION: john-legg
-          PROJECT_ID: 1
-          PRIORITY_FIELD_ID: 52539592
-          ISSUE_ID: ${{ github.event.issue.number }}
-          PRIORITY_VALUE: Nice
+#         env:
+# #           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+#           ORGANIZATION: john-legg
+#           PROJECT_ID: 1
+#           PRIORITY_FIELD_ID: 52539592
+#           ISSUE_ID: ${{ github.event.issue.number }}
+#           PRIORITY_VALUE: Nice
         run: echo Hello, world! $ISSUE_ID
         
 #       - name: Set fields
@@ -79,7 +79,7 @@ jobs:
         uses: github/update-project-action@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-#           organization: john-legg
+          organization: john-legg
           project_number: 1
           operation: read
           field: 52539592
