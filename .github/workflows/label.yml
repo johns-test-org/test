@@ -42,7 +42,37 @@ jobs:
           ORGANIZATION: john-legg
           PROJECT_NUMBER: 1
           PRIORITY_FIELD_ID: 52539592
-        run: echo Hello, world! $PRIORITY_FIELD_ID
+          ISSUE_ID: ${{ github.event.client_payload.command.resource.id }}
+        run: echo Hello, world! $ISSUE_ID
+        
+#       - name: Set fields
+# #         env:
+# #           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+#         run: |
+#           gh api graphql -f query='
+#             mutation (
+#               $project: ID!
+#               $item: ID!
+#               $status_field: ID!
+#               $status_value: String!
+#               $date_field: ID!
+#               $date_value: Date!
+#             ) {
+#               set_status: updateProjectV2ItemFieldValue(input: {
+#                 projectId: $PROJECT_NUMBER
+#                 itemId: $item
+#                 fieldId: $status_field
+#                 value: {
+#                   singleSelectOptionId: $status_value
+#                   }
+#               }) {
+#                 projectV2Item {
+#                   id
+#                   }
+#               }
+              
+#             }
+            
           
       # Runs a single command using the runners shell
       - name: Run a one-line script
@@ -53,3 +83,5 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+          
+      
