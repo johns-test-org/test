@@ -40,40 +40,40 @@ jobs:
 #       - uses: actions/checkout@v3
       
       - name: Get project data
-#         env:
-# #           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
-#           ORGANIZATION: johns-test-org
-#           PROJECT_ID: 1
-#           PRIORITY_FIELD_ID: 52546499
-#           ISSUE_ID: ${{ github.event.issue.number }}
-#           PRIORITY_VALUE: Nice
+        env:
+#           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+          ORGANIZATION: johns-test-org
+          PROJECT_ID: 1
+          PRIORITY_FIELD_ID: 52546499
+          ISSUE_ID: ${{ github.event.issue.number }}
+          PRIORITY_VALUE: Nice
         run: echo Hello, world! $ISSUE_ID
         
-#       - name: Set fields
-#         env:
-#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         run: |
-#           gh api graphql -f query='
-#             mutation (
-#               $project: ID!
-#               $item: ID!
-#               $status_field: ID!
-#               $status_value: String!
-#             ) {
-#               set_status: updateProjectV2ItemFieldValue(input: {
-#                 projectId: $project
-#                 itemId: $item
-#                 fieldId: $status_field
-#                 value: {
-#                   singleSelectOptionId: $status_value
-#                   }
-#               }) {
-#                 projectV2Item {
-#                   id
-#                   }
-#               }
+      - name: Set fields
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api graphql -f query='
+            mutation (
+              $project: ID!
+              $item: ID!
+              $status_field: ID!
+              $status_value: String!
+            ) {
+              set_status: updateProjectV2ItemFieldValue(input: {
+                projectId: $project
+                itemId: $item
+                fieldId: $status_field
+                value: {
+                  singleSelectOptionId: $status_value
+                  }
+              }) {
+                projectV2Item {
+                  id
+                  }
+              }
               
-#             }' -f project=$PROJECT_ID -f item=$ISSUE_ID -f status_field=$PRIORITY_FIELD_ID -f status_value=$PRIORITY_VALUE 
+            }' -f project=$PROJECT_ID -f item=$ISSUE_ID -f status_field=$PRIORITY_FIELD_ID -f status_value=$PRIORITY_VALUE 
             
 #       - name: Read status
 #         id: read_status
@@ -88,16 +88,16 @@ jobs:
 #       - name: Output status
 #         run: |
 #           echo "Current status value: ${{ steps.read_status.outputs.field_read_value }}"
-      - name: Update status
-        id: update_status
-        uses: github/update-project-action@v2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          organization: johns-test-org
-          project_number: 2
-          content_id: ${{ github.event.client_payload.command.resource.id }}
-          field: Priority
-          value: wow
+#       - name: Update status
+#         id: update_status
+#         uses: github/update-project-action@v2
+#         with:
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           organization: johns-test-org
+#           project_number: 2
+#           content_id: ${{ github.event.client_payload.command.resource.id }}
+#           field: Priority
+#           value: wow
           
       # Runs a single command using the runners shell
       - name: Run a one-line script
