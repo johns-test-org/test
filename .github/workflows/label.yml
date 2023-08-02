@@ -79,7 +79,7 @@ jobs:
         uses: github/update-project-action@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          organization: john-legg
+#           organization: john-legg
           project_number: 1
           operation: read
           field: 52539592
