@@ -110,7 +110,7 @@ jobs:
           organization: johns-test-org
           project_number: 1
           operation: read
-#           field: 52546499
+          field: 52546499
           content_id: ${{ github.event.issue.node_id }}
       - name: Output status
         run: |
