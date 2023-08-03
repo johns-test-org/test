@@ -104,7 +104,7 @@ jobs:
         id: read_status
         uses: github/update-project-action@v2
         with:
-#           github_token: ${{ secrets.UPDATE_TOKEN }}
+          github_token: ${{ steps.generate_token.outputs.token }}
           organization: johns-test-org
           project_number: 1
           operation: read
