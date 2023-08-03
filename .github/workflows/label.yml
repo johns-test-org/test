@@ -115,16 +115,16 @@ jobs:
       - name: Output status
         run: |
           echo "Current status value: ${{ steps.read_status.outputs.field_read_value }}"
-#       - name: Update status
-#         id: update_status
-#         uses: github/update-project-action@v2
-#         with:
-#           github_token: ${{ secrets.GITHUB_TOKEN }}
-#           organization: johns-test-org
-#           project_number: 2
-#           content_id: ${{ github.event.client_payload.command.resource.id }}
-#           field: Priority
-#           value: wow
+      - name: Update status
+        id: update_status
+        uses: github/update-project-action@v2
+        with:
+          github_token: ${{ steps.generate_token.outputs.token }}
+          organization: johns-test-org
+          project_number: 1
+          content_id: ${{ github.event.issue.node_id }}
+          field: Priority
+          value: High
           
 
 
