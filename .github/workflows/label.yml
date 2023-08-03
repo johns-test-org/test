@@ -43,7 +43,7 @@ jobs:
         env:
 #           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
           ORGANIZATION: johns-test-org
-          PROJECT_ID: 1
+          PROJECT_ID: "1"
           PRIORITY_FIELD_ID: 52546499
           ISSUE_ID: ${{ github.event.issue.number }}
           PRIORITY_VALUE: Nice
