@@ -95,11 +95,11 @@ jobs:
               
 #             }' -f project=$PROJECT_ID -f item=$ISSUE_ID -f status_field=$PRIORITY_FIELD_ID -f status_value=$PRIORITY_VALUE 
             
-#       # Runs a single command using the runners shell
-#       - name: Run a one-line script
-#         env:
-#           GH_TOKEN: ${{ steps.generate_token.outputs.token }}
-#         run: echo Hello, world! $PRIORITY_FIELD_ID
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        env:
+          LABEL_NAME: ${{ github.event.issue.labels }}
+        run: echo Hello, world! $LABEL_NAME
             
             
       - name: Read status
