@@ -111,7 +111,7 @@ jobs:
           project_number: 1
           operation: read
 #           field: 52546499
-          content_id: ${{ github.event.client_payload.command.resource.id }}
+          content_id: ${{ github.event.issue.number }}
       - name: Output status
         run: |
           echo "Current status value: ${{ steps.read_status.outputs.field_read_value }}"
