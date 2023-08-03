@@ -56,18 +56,18 @@ jobs:
 #           PRIORITY_VALUE: Nice
 #         run: echo Hello, world! $ISSUE_ID
         
-      - name: Look up fields
-        env:
-          GH_TOKEN: ${{ secrets.UPDATE_TOKEN }}
-        run: |
-          gh api graphql -f query='
-            query{
-              organization(login: "johns-test-org"){
-                projectV2(number: 1) {
-                  id
-                }
-              }
-            }' 
+#       - name: Look up fields
+#         env:
+#           GH_TOKEN: ${{ secrets.UPDATE_TOKEN }}
+#         run: |
+#           gh api graphql -f query='
+#             query{
+#               organization(login: "johns-test-org"){
+#                 projectV2(number: 1) {
+#                   id
+#                 }
+#               }
+#             }' 
         
 #       - name: Set fields
 #         env:
@@ -95,19 +95,19 @@ jobs:
               
 #             }' -f project=$PROJECT_ID -f item=$ISSUE_ID -f status_field=$PRIORITY_FIELD_ID -f status_value=$PRIORITY_VALUE 
             
-#       - name: Read status
-#         id: read_status
-#         uses: github/update-project-action@v2
-#         with:
-#           github_token: ${{ secrets.GITHUB_TOKEN }}
-#           organization: johns-test-org
-#           project_number: 1
-#           operation: read
-#           field: 52546499
-#           content_id: ${{ github.event.client_payload.command.resource.id }}
-#       - name: Output status
-#         run: |
-#           echo "Current status value: ${{ steps.read_status.outputs.field_read_value }}"
+      - name: Read status
+        id: read_status
+        uses: github/update-project-action@v2
+        with:
+          github_token: ${{ secrets.UPDATE_TOKEN }}
+          organization: johns-test-org
+          project_number: 1
+          operation: read
+          field: 52546499
+          content_id: ${{ github.event.client_payload.command.resource.id }}
+      - name: Output status
+        run: |
+          echo "Current status value: ${{ steps.read_status.outputs.field_read_value }}"
 #       - name: Update status
 #         id: update_status
 #         uses: github/update-project-action@v2
