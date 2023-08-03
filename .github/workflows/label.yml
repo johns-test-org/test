@@ -98,7 +98,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         env:
-          LABEL_NAME: ${{ github.event.issue.labels }}
+          LABEL_NAME: ${{ github.event.issue.labels.* }}
         run: echo Hello, world! $LABEL_NAME
             
             
