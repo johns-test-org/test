@@ -112,6 +112,7 @@ jobs:
           operation: read
           field: Priority
           content_id: ${{ github.event.issue.node_id }}
+          value: High
       - name: Output status
         run: |
           echo "Current status value: ${{ steps.read_status.outputs.field_read_value }}"
