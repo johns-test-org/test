@@ -21,14 +21,12 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   check_priority: 
-    if: contains(fromJSON('["[Pri] Low", "[Pri] Normal"]'), github.event.issue.labels.*.name)
-
-#     if: |
-#       contains(github.event.issue.labels.*.name, '[Pri] TBD') || 
-#       contains(github.event.issue.labels.*.name, '[Pri] Low') || 
-#       contains(github.event.issue.labels.*.name, '[Pri] Normal') ||
-#       contains(github.event.issue.labels.*.name, '[Pri] High') ||
-#       contains(github.event.issue.labels.*.name, '[Pri] BLOCKER')
+    if: |
+      contains(github.event.issue.labels.*.name, '[Pri] TBD') || 
+      contains(github.event.issue.labels.*.name, '[Pri] Low') || 
+      contains(github.event.issue.labels.*.name, '[Pri] Normal') ||
+      contains(github.event.issue.labels.*.name, '[Pri] High') ||
+      contains(github.event.issue.labels.*.name, '[Pri] BLOCKER')
 
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -101,7 +99,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         env:
-          LABEL_NAME: ${{ github.event.issue.labels.* }}
+          LABEL_NAME: ${{ toJSON(github.event.issue.labels.*.name) }}
         run: echo Hello, world! $LABEL_NAME
             
             
