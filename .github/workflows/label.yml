@@ -46,19 +46,19 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 #       - uses: actions/checkout@v3
       
-      - name: Get project data
-        env:
-#           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
-          ORGANIZATION: johns-test-org
-          PROJECT_ID: "1"
-          PRIORITY_FIELD_ID: 52546499
-          ISSUE_ID: ${{ github.event.issue.number }}
-          PRIORITY_VALUE: Nice
-        run: echo Hello, world! $ISSUE_ID
+#       - name: Get project data
+#         env:
+# #           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+#           ORGANIZATION: johns-test-org
+#           PROJECT_ID: "1"
+#           PRIORITY_FIELD_ID: 52546499
+#           ISSUE_ID: ${{ github.event.issue.number }}
+#           PRIORITY_VALUE: Nice
+#         run: echo Hello, world! $ISSUE_ID
         
       - name: Look up fields
 #         env:
-#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           GH_TOKEN: ${{ secrets.UPDATE_TOKEN }}
         run: |
           gh api graphql -f query='
             query{
