@@ -97,14 +97,14 @@ jobs:
             
       # Runs a single command using the runners shell
       - name: Run a one-line script
+        env:
+          GH_TOKEN: ${{ secrets.UPDATE_TOKEN }}
         run: echo Hello, world! $PRIORITY_FIELD_ID
             
             
       - name: Read status
         id: read_status
         uses: github/update-project-action@v2
-        env:
-          GH_TOKEN: ${{ secrets.UPDATE_TOKEN }}
         with:
           github_token: ${{ secrets.UPDATE_TOKEN }}
           organization: johns-test-org
