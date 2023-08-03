@@ -55,8 +55,8 @@ jobs:
         run: |
           gh api graphql -f query='
             query{
-              organization(login: "ORGANIZATION"){
-                projectV2(number: NUMBER) {
+              organization(login: "johns-test-org"){
+                projectV2(number: 1) {
                   id
                 }
               }
