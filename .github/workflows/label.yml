@@ -36,6 +36,13 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PEM }}
+    
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 #       - uses: actions/checkout@v3
       
@@ -50,8 +57,8 @@ jobs:
         run: echo Hello, world! $ISSUE_ID
         
       - name: Look up fields
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         env:
+#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh api graphql -f query='
             query{
