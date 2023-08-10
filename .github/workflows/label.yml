@@ -1,15 +1,10 @@
-# This is a basic workflow to help you get started with Actions
+# Updates the Priority field on a Project board when a [Pri] label gets added to an issue.
 
 name: Keep priority labels in sync
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-#   push:
-#     branches: [ "main" ]
-#   pull_request:
-#     branches: [ "main" ]
-
+  # Triggers the workflow when labels are added to an issue
   issues:
     types:
       - labeled
@@ -21,13 +16,13 @@ on:
 jobs:
   check_labels:
     runs-on: ubuntu-latest
-    steps:
-      - name: Get labels
-        env:
-          LABELS: ${{ github.event.issue.labels.*.name }}
-        run: echo Hello, world! $LABELS
+#     steps:
+#       - name: Get labels
+#         env:
+#           LABELS: ${{ github.event.issue.labels.*.name }}
+#         run: echo Hello, world! $LABELS
 
-  # This workflow contains a single job called "build"
+  # Updates the Priority field with the appropriate priority level
   check_priority: 
     if: |
       contains(github.event.issue.labels.*.name, '[Pri] TBD') || 
@@ -38,9 +33,6 @@ jobs:
 
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-#     permissions:
-#       repository-projects: write
-#       issues: read
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -50,67 +42,8 @@ jobs:
         uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92
         with:
           app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.APP_PEM }}
-    
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-#       - uses: actions/checkout@v3
-      
-#       - name: Get project data
-#         env:
-#           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
-#           ORGANIZATION: johns-test-org
-#           PROJECT_ID: "1"
-#           PRIORITY_FIELD_ID: 52546499
-#           ISSUE_ID: ${{ github.event.issue.number }}
-#           PRIORITY_VALUE: Nice
-#         run: echo Hello, world! $ISSUE_ID
-        
-#       - name: Look up fields
-#         env:
-#           GH_TOKEN: ${{ secrets.UPDATE_TOKEN }}
-#         run: |
-#           gh api graphql -f query='
-#             query{
-#               organization(login: "johns-test-org"){
-#                 projectV2(number: 1) {
-#                   id
-#                 }
-#               }
-#             }' 
-        
-#       - name: Set fields
-#         env:
-#           GH_TOKEN: ${{ steps.generate_token.outputs.token }}
-#         run: |
-#           gh api graphql -f query='
-#             mutation (
-#               $project: ID!
-#               $item: ID!
-#               $status_field: ID!
-#               $status_value: String!
-#             ) {
-#               set_status: updateProjectV2ItemFieldValue(input: {
-#                 projectId: $project
-#                 itemId: $item
-#                 fieldId: $status_field
-#                 value: {
-#                   singleSelectOptionId: $status_value
-#                   }
-#               }) {
-#                 projectV2Item {
-#                   id
-#                   }
-#               }
-              
-#             }' -f project=$PROJECT_ID -f item=$ISSUE_ID -f status_field=$PRIORITY_FIELD_ID -f status_value=$PRIORITY_VALUE 
-            
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        env:
-          LABEL_NAME: ${{ toJSON(github.event.issue.labels.*.name) }}
-        run: echo Hello, world! $LABEL_NAME
-            
-            
+          private_key: ${{ secrets.APP_PEM }} 
+
       - name: Read status
         id: read_status
         uses: github/update-project-action@v2
@@ -125,23 +58,15 @@ jobs:
       - name: Output status
         run: |
           echo "Current status value: ${{ steps.read_status.outputs.field_read_value }}"
-      - name: Update status
-        id: update_status
-        uses: github/update-project-action@v2
-        with:
-          github_token: ${{ steps.generate_token.outputs.token }}
-          organization: johns-test-org
-          project_number: 1
-          content_id: ${{ github.event.issue.node_id }}
-          field: Priority
-          value: High
-          
-
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+#       - name: Update status
+#         id: update_status
+#         uses: github/update-project-action@v2
+#         with:
+#           github_token: ${{ steps.generate_token.outputs.token }}
+#           organization: johns-test-org
+#           project_number: 1
+#           content_id: ${{ github.event.issue.node_id }}
+#           field: Priority
+#           value: High
           
       
