@@ -61,7 +61,7 @@ jobs:
           label="${{github.event.label.name}}"
           prefix="[Pri]"
           echo "PRIORITY_LABEL=wow" >> "$GITHUB_ENV"
-          echo $PRIORITY_LABEL
+          printf '%s\n' "$PRIORITY_LABEL"
 
       - name: Read status
         id: read_status
