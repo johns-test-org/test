@@ -14,13 +14,15 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-#   check_labels:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Get labels
-#         env:
-#           LABELS: ${{ github.event.issue.labels.*.name }}
-#         run: echo Hello, world! $LABELS
+  check_labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get labels
+        env:
+          LABELS: ${{ github.event.issue.labels.*.name }}
+        run: |
+          if [[ contains($LABELS, '[Pri] Normal') ]]; then
+              echo yes
 
   # Updates the Priority field with the appropriate priority level
   check_priority: 
