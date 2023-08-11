@@ -22,7 +22,12 @@ jobs:
           array=${{ github.event.issue.labels.*.name }}
           for item in ${array[*]}
           do
-              echo "Found Juice"
+           if [[ "$item" == "[Pri] Low" ]]; then
+              echo "Low"
+            fi
+            if [[ "$item" == "[Pri] Normal" ]]; then
+              echo "Normal"
+            fi
           done
 
   # Updates the Priority field with the appropriate priority level
