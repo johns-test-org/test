@@ -19,7 +19,8 @@ jobs:
     steps:
     - name: check juice with bash
       run: |
-          for item in "${{ github.event.issue.labels.*.name }}"
+          array=${{ github.event.issue.labels.*.name }}
+          for item in "${array[@]}"
           do
             echo "$item"
             if [[ "$item" == "[Pri] Low" ]]; then
