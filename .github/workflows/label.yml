@@ -59,7 +59,8 @@ jobs:
         run: |
           label="${{github.event.label.name}}"
           prefix="[Pri]"
-          echo ${label#"$prefix"}
+          echo "${label#'$prefix'} >> $PRIORITY_LABEL"
+          echo $PRIORITY_LABEL
 
       - name: Read status
         id: read_status
