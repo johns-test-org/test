@@ -21,7 +21,7 @@ jobs:
       run: |
           for item in "${{ github.event.issue.labels.*.name }}"
           do
-            echo $item
+            echo "$item"
             if [[ "$item" == "[Pri] Low" ]]; then
               echo "Low"
             fi
