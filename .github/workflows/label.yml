@@ -18,10 +18,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get labels
-        env:
-          LABELS: ${{ github.event.issue.labels.*.name }}
+        # env:
+        #   LABELS: ${{ github.event.issue.labels.*.name }}
         run: |
-          if [[ contains($LABELS, '[Pri] Normal') ]]; then
+          if [[ contains(github.event.issue.labels.*.name, '[Pri] Low') ]]; then
               echo yes
 
   # Updates the Priority field with the appropriate priority level
