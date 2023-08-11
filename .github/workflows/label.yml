@@ -22,7 +22,7 @@ jobs:
           array=${{ github.event.issue.labels.*.name }}
           for item in "${array[@]}"
           do
-            echo "$item"
+            echo "$item[0]"
             if [[ "$item" == "[Pri] Low" ]]; then
               echo "Low"
             fi
