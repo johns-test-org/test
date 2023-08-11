@@ -14,8 +14,8 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  check_labels:
-    runs-on: ubuntu-latest
+#   check_labels:
+#     runs-on: ubuntu-latest
 #     steps:
 #       - name: Get labels
 #         env:
@@ -54,7 +54,7 @@ jobs:
           operation: read
           field: Priority
           content_id: ${{ github.event.issue.node_id }}
-          value: High
+          value: Low
       - name: Output status
         run: |
           echo "Current status value: ${{ steps.read_status.outputs.field_read_value }}"
