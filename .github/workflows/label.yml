@@ -57,7 +57,7 @@ jobs:
       - name: Get label
         id: get_label
         run: |
-          label=${{github.event.label.name}}
+          label="${{github.event.label.name}}"
           prefix="[Pri]"
           echo "${label#"$prefix"}
 
@@ -71,7 +71,7 @@ jobs:
           operation: read
           field: Priority
           content_id: ${{ github.event.issue.node_id }}
-          value: ${{ github.event.issue.node_id }}
+          value: Normal
       - name: Output status
         run: |
           echo "Current status value: ${{ steps.read_status.outputs.field_read_value }}"
