@@ -17,12 +17,13 @@ jobs:
   check_labels:
     runs-on: ubuntu-latest
     steps:
-      - name: Get labels
-        # env:
-        #   LABELS: ${{ github.event.issue.labels.*.name }}
-        run: |
-          if [[ contains(github.event.issue.labels.*.name, '[Pri] Low') ]]; then
-              echo yes
+    - name: check juice with bash
+      run: |
+          array=${{ github.event.issue.labels.*.name }}
+          for item in ${array[*]}
+          do
+              echo "Found Juice"
+          done
 
   # Updates the Priority field with the appropriate priority level
   check_priority: 
