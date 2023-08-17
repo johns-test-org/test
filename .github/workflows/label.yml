@@ -58,7 +58,7 @@ jobs:
       - name: Get label
         id: get_label
         env:
-          PRIORITY_LABEL: nah
+          PRIORITY_LABEL: ${{github.event.project}}
         run: |
           label="${{github.event.label.name}}"
           prefix="[Pri]"
