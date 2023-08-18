@@ -65,6 +65,22 @@ jobs:
           echo "PRIORITY_LABEL=wow" >> $GITHUB_ENV
           echo $PRIORITY_LABEL
 
+      - name: Check if issue is already in "${{ env.BOARD_NAME }}"
+        id: check_board
+        env:
+          BOARD_NAME: "Test Project 2"
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: |
+          if curl -i -H 'Content-Type: application/json' -H "Authorization: bearer ${{ steps.generate_token.outputs.token }}" -X POST -d '{"query": "query($issue: Int!, $owner: String!, $repo: String!) { repository(owner: $owner, name: $repo) { issue(number: $issue) { projectCards { nodes { project { name } } } } } } ", "variables" : "{ \"issue\": '${ISSUE}', \"owner\": \"'${OWNER}'\", \"repo\": \"'${REPO}'\" }" }' https://api.github.com/graphql | grep "\b$BOARD_NAME\b"; then
+            echo "Issue is already in Project '$BOARD_NAME', cancelling this workflow";
+            echo "ALREADY_IN_BOARD=true" >> $GITHUB_ENV
+          else
+            echo "Issue is not in project '$BOARD_NAME', adding it to $BOARD_NAME."
+            echo "ALREADY_IN_BOARD=false" >> $GITHUB_ENV
+          fi
+
       - name: Read status
         id: read_status
         uses: github/update-project-action@v2
