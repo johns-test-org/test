@@ -60,7 +60,9 @@ jobs:
         env:
           PRIORITY_LABEL: ${{github.event.label.name}}
         run: |
-          echo "PRIORITY_LABEL=Hello" >> $GITHUB_ENV
+          prefix="[Pri] "
+          label="${{github.event.label.name}}"
+          echo "PRIORITY_LABEL=${label#'$prefix'}" >> $GITHUB_ENV
           echo $PRIORITY_LABEL
 
       # - name: Check if issue is already in "${{ env.BOARD_NAME }}"
