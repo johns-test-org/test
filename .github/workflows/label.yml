@@ -62,7 +62,8 @@ jobs:
         run: |
           prefix="[Pri] "
           label="${{github.event.label.name}}"
-          echo "PRIORITY_LABEL=${label#'$prefix'}" >> $GITHUB_ENV
+          priority=${label#"$prefix"}
+          echo "PRIORITY_LABEL=priority" >> $GITHUB_ENV
           echo $PRIORITY_LABEL
 
       # - name: Check if issue is already in "${{ env.BOARD_NAME }}"
