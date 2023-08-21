@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
 
     #Unfortuantely, I can't use the environment variable here
-    if:  contains(github.event.label.name, "[Pri] ")
+    if:  contains(github.event.label.name, '[Pri]')
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
