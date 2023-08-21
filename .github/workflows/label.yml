@@ -22,11 +22,9 @@ jobs:
 
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    
-    if:  ${{ env.LABEL_PREFIX == "[Pri] " }}
-    # contains(github.event.label.name, 
 
-
+    #Unfortuantely, I can't use the environment variable here
+    if:  contains(github.event.label.name, "[Pri] ")
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -37,37 +35,20 @@ jobs:
         with:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PEM }} 
-          #           echo "PRIORITY_LABEL=${label#'$prefix'}" >> "$GITHUB_ENV"
 
-      - name: Get label
-        id: get_label
+      - name: Get priority
+        id: get_priority
         env:
           PRIORITY_LABEL: ${{github.event.label.name}}
         run: |
-          prefix="[Pri] "
+          prefix="${{env.LABEL_PREFIX}}"
           label="${{github.event.label.name}}"
           priority=${label#"$prefix"}
           echo "PRIORITY_LABEL=$priority" >> $GITHUB_ENV
           echo $PRIORITY_LABEL
 
-      # - name: Check if issue is already in "${{ env.BOARD_NAME }}"
-      #   id: check_board
-      #   env:
-      #     BOARD_NAME: "Test Project 2"
-      #     OWNER: ${{ github.repository_owner }}
-      #     REPO: ${{ github.event.repository.name }}
-      #     ISSUE: ${{ github.event.issue.number }}
-      #   run: |
-      #     if curl -i -H 'Content-Type: application/json' -H "Authorization: bearer ${{ steps.generate_token.outputs.token }}" -X POST -d '{"query": "query($issue: Int!, $owner: String!, $repo: String!) { repository(owner: $owner, name: $repo) { issue(number: $issue) { projectCards { nodes { project { name } } } } } } ", "variables" : "{ \"issue\": '${ISSUE}', \"owner\": \"'${OWNER}'\", \"repo\": \"'${REPO}'\" }" }' https://api.github.com/graphql | grep "\b$BOARD_NAME\b"; then
-      #       echo "Issue is already in Project '$BOARD_NAME', cancelling this workflow";
-      #       echo "ALREADY_IN_BOARD=true" >> $GITHUB_ENV
-      #     else
-      #       echo "Issue is not in project '$BOARD_NAME', adding it to $BOARD_NAME."
-      #       echo "ALREADY_IN_BOARD=false" >> $GITHUB_ENV
-      #     fi
-
-      - name: Read status
-        id: read_status
+      - name: Update project field
+        id: update_project_field
         uses: github/update-project-action@v2
         with:
           github_token: ${{ steps.generate_token.outputs.token }}
