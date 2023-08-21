@@ -19,7 +19,8 @@ jobs:
 
   # Updates the Priority field with the appropriate priority level
   check_priority: 
-    if:  ${{ contains(github.event.label.name, env.LABEL_PREFIX) }}
+    if:  ${{ env.LABEL_PREFIX == "[Pri] " }}
+    # contains(github.event.label.name, 
 
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
