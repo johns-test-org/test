@@ -58,8 +58,10 @@ jobs:
           field: ${{ env.PROJECT_FIELD }}
           content_id: ${{ github.event.issue.node_id }}
           value: ${{ env.PRIORITY_LABEL }}
-      - name: Output status
-        run: |
-          echo "Current status value: ${{ steps.read_status.outputs.field_read_value }}"
+      - name: Check for errors
+        uses: actions/github-script@v3
+        with:
+          script: |
+            core.setFailed('Whoops')
           
       
