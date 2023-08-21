@@ -55,22 +55,11 @@ jobs:
           github_token: ${{ steps.generate_token.outputs.token }}
           organization: ${{ env.ORGANIZATION }}
           project_number: ${{ env.PROJECT_NUMBER }}
-          operation: read
           field: ${{ env.PROJECT_FIELD }}
           content_id: ${{ github.event.issue.node_id }}
           value: ${{ env.PRIORITY_LABEL }}
       - name: Output status
         run: |
           echo "Current status value: ${{ steps.read_status.outputs.field_read_value }}"
-#       - name: Update status
-#         id: update_status
-#         uses: github/update-project-action@v2
-#         with:
-#           github_token: ${{ steps.generate_token.outputs.token }}
-#           organization: johns-test-org
-#           project_number: 1
-#           content_id: ${{ github.event.issue.node_id }}
-#           field: Priority
-#           value: High
           
       
