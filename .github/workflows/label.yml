@@ -9,10 +9,10 @@ on:
     types:
       - labeled
 
-  env:
-    LABEL_PREFIX: "[Pri] "
-    PROJECT_ID: 1
-    PROJECT_FIELD: "Priority"
+env:
+  LABEL_PREFIX: "[Pri] "
+  PROJECT_ID: 1
+  PROJECT_FIELD: "Priority"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
