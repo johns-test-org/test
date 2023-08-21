@@ -52,7 +52,7 @@ jobs:
         uses: github/update-project-action@v2
         with:
           github_token: ${{ steps.generate_token.outputs.token }}
-          organization: johns-test-org
+          organization: ${{ github.event.organization.name }}
           project_number: 1
           operation: read
           field: Priority
