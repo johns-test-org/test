@@ -58,7 +58,5 @@ jobs:
           field: ${{ env.PROJECT_FIELD }}
           content_id: ${{ github.event.issue.node_id }}
           value: ${{ env.PRIORITY_LABEL }}
-      - name: Create annotation for build error
-        run: echo "::error Whoops"
           
       
