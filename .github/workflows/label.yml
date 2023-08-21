@@ -58,10 +58,7 @@ jobs:
           field: ${{ env.PROJECT_FIELD }}
           content_id: ${{ github.event.issue.node_id }}
           value: ${{ env.PRIORITY_LABEL }}
-      - name: Check for errors
-        uses: actions/github-script@v3
-        with:
-          script: |
-            core.setFailed('Whoops')
+      - name: Create annotation for build error
+        run: echo "::error Whoops"
           
       
