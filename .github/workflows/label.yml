@@ -11,8 +11,9 @@ on:
 
 env:
   LABEL_PREFIX: "[Pri] "
-  PROJECT_ID: 1
+  PROJECT_NUMBER: 1
   PROJECT_FIELD: "Priority"
+  ORGANIZATION: "Automattic"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -52,10 +53,10 @@ jobs:
         uses: github/update-project-action@v2
         with:
           github_token: ${{ steps.generate_token.outputs.token }}
-          organization: ${{ github.event.organization.name }}
-          project_number: 1
+          organization: ${{ env.ORGANIZATION }}
+          project_number: ${{ env.PROJECT_NUMBER }}
           operation: read
-          field: Priority
+          field: ${{ env.PROJECT_FIELD }}
           content_id: ${{ github.event.issue.node_id }}
           value: ${{ env.PRIORITY_LABEL }}
       - name: Output status
