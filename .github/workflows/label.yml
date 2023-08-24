@@ -66,7 +66,7 @@ jobs:
           echo 'ISSUE_PROJECTS='$(jq '.data.node.projectItems.nodes' project_data.json) >> $GITHUB_ENV
           echo 'THE_ID='$(jq '.data.node.projectItems.nodes[].project.number' project_data.json) >> $GITHUB_ENV
           echo 'BOOL_ID='$(jq 'any(.data.node.projectItems.nodes[]; .project.number == ${{ env.PROJECT_NUMBER }})' project_data.json) >> $GITHUB_ENV
-
+          echo "LABEL_P=${{env.LABEL_PREFIX}} b" >> $GITHUB_ENV
           echo $ISSUE_PROJECTS
 
       - name: Get priority
@@ -83,6 +83,7 @@ jobs:
           echo $ISSUE_PROJECTS
           echo $THE_ID
           echo $BOOL_ID
+          echo $LABEL_P
 
       - name: Update project field
         id: update_project_field
