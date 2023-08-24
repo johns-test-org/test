@@ -38,6 +38,8 @@ jobs:
           private_key: ${{ secrets.APP_PEM }} 
 
       - name: Check if issue is in project
+        env:
+            GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
         run: |
           gh api graphql -f query='
             query($id: ID!){
