@@ -37,6 +37,29 @@ jobs:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PEM }} 
 
+      - name: Check if issue is in project
+        uses: actions/github-script@v6
+        id: get-project-item-id
+        with:
+          github-token: ${{ steps.generate_token.outputs.token }}
+          script:
+            |
+            const query = `mutation($projectId:ID!, $contentId:ID!) {
+                addProjectV2ItemById(input: {projectId: $projectId, contentId: $contentId}) {
+                  item {
+                    id
+                  }
+                }
+              }`
+  
+            const variables = {
+                projectId: "${{inputs.projectId}}"
+                contentId: "${{inputs.issueId}}"
+              };
+            const result = await github.graphql(query, variables);
+            core.info(`addProjectV2ItemById result: ${JSON.stringify(result)}`);
+            core.setOutput("projectIdItemId",  result.addProjectV2ItemById.item.id);
+
       - name: Get priority
         id: get_priority
         env:
