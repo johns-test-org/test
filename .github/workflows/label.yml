@@ -65,7 +65,7 @@ jobs:
           cat project_data.json
           echo 'ISSUE_PROJECTS='$(jq '.data.node.projectItems.nodes' project_data.json) >> $GITHUB_ENV
           echo 'THE_ID='$(jq '.data.node.projectItems.nodes[].project.number' project_data.json) >> $GITHUB_ENV
-          echo 'BOOL_ID='$(jq 'any(.data.node.projectItems.nodes[]; .project.number == 1)' project_data.json) >> $GITHUB_ENV
+          echo 'BOOL_ID='$(jq 'any(.data.node.projectItems.nodes[]; .project.number == ${{ env.PROJECT_NUMBER }})' project_data.json) >> $GITHUB_ENV
 
           echo $ISSUE_PROJECTS
 
