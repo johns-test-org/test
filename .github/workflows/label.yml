@@ -70,7 +70,7 @@ jobs:
           echo $ISSUE_PROJECTS
 
       - name: Get priority
-        if: contains(github.event.label.name, '[Pri]') && env.BOOL_ID == true
+        # if: contains(github.event.label.name, '[Pri]') && env.BOOL_ID == true
         id: get_priority
         env:
           PRIORITY_LABEL: ${{github.event.label.name}}
