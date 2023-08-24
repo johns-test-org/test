@@ -64,6 +64,7 @@ jobs:
             }' -f id=$ISSUE_ID > project_data.json
           cat project_data.json
           echo 'ISSUE_PROJECTS='$(jq '.data.node.projectItems.nodes' project_data.json) >> $GITHUB_ENV
+          echo 'THE_ID='$(jq '.data.node.projectItems.nodes[] | .number' project_data.json) >> $GITHUB_ENV
           echo $ISSUE_PROJECTS
 
       - name: Get priority
@@ -77,6 +78,7 @@ jobs:
           echo "PRIORITY_LABEL=$priority" >> $GITHUB_ENV
           echo $PRIORITY_LABEL
           echo $ISSUE_PROJECTS
+          echo $THE_ID
 
       - name: Update project field
         id: update_project_field
