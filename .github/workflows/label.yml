@@ -38,7 +38,6 @@ jobs:
           private_key: ${{ secrets.APP_PEM }} 
 
       - name: Check if issue is in project
-        if: contains(github.event.label.name, '[Pri]')
         env:
             GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
             ISSUE_ID: ${{ github.event.issue.node_id }}
@@ -69,6 +68,7 @@ jobs:
           echo $ISSUE_PROJECTS
 
       - name: Get priority
+        if: contains(github.event.label.name, '[Pri]') && contains(env.THE_ID, env.PROJECT_NUMBER)
         id: get_priority
         env:
           PRIORITY_LABEL: ${{github.event.label.name}}
