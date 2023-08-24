@@ -76,6 +76,7 @@ jobs:
           priority=${label#"$prefix"}
           echo "PRIORITY_LABEL=$priority" >> $GITHUB_ENV
           echo $PRIORITY_LABEL
+          echo $ISSUE_PROJECTS
 
       - name: Update project field
         id: update_project_field
