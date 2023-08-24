@@ -68,7 +68,7 @@ jobs:
 
       # Update the corresponding project field with the label value.
       - name: Update project field
-        if: contains(github.event.label.name, '[Pri]') && env.ISSUE_IN_PROJECT == 'true'
+        if: contains(github.event.label.name, env.PRIORITY_PREFIX) && env.ISSUE_IN_PROJECT == 'true'
         uses: github/update-project-action@v2
         with:
           github_token: ${{ steps.generate_token.outputs.token }}
