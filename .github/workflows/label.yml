@@ -40,6 +40,7 @@ jobs:
       - name: Check if issue is in project
         env:
             GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+            ISSUE_ID: ${{ github.event.issue.node_id }}
         run: |
           gh api graphql -f query='
             query($id: ID!){
@@ -60,7 +61,7 @@ jobs:
                   }
                 }
               }
-            }' -f id=1 > project_data.json
+            }' -f id=$ISSUE_ID > project_data.json
 
       - name: Get priority
         id: get_priority
