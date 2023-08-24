@@ -89,7 +89,7 @@ jobs:
 
       - name: Update project field
         id: update_project_field
-        if: env.BOOL_ID == true
+        if: contains(github.event.label.name, '[Pri]') && env.BOOL_ID == 'true'
         uses: github/update-project-action@v2
         with:
           github_token: ${{ steps.generate_token.outputs.token }}
