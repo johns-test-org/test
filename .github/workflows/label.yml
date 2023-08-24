@@ -52,7 +52,7 @@ jobs:
                         ... on ProjectV2Item {
                           project {
                             ... on ProjectV2 {
-                              id, title, number
+                              number
                             }
                           }
                         }
