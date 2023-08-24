@@ -11,7 +11,7 @@ on:
 
 env:
   LABEL_PREFIX: "[Pri] "
-  PROJECT_NUMBER: 10
+  PROJECT_NUMBER: 1
   PROJECT_FIELD: "Priority"
   ORGANIZATION: "johns-test-org"
 
@@ -70,7 +70,6 @@ jobs:
           echo $ISSUE_PROJECTS
 
       - name: Get priority
-        # if: contains(github.event.label.name, '[Pri]') && env.BOOL_ID == true
         id: get_priority
         env:
           PRIORITY_LABEL: ${{github.event.label.name}}
@@ -86,6 +85,7 @@ jobs:
 
       - name: Update project field
         id: update_project_field
+        if: contains(github.event.label.name, '[Pri]') && env.BOOL_ID == true
         uses: github/update-project-action@v2
         with:
           github_token: ${{ steps.generate_token.outputs.token }}
