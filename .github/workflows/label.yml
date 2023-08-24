@@ -10,7 +10,7 @@ on:
       - labeled
 
 env:
-  LABEL_PREFIX: "[Pri] "
+  LABEL_PREFIX: "[Pri]"
   PROJECT_NUMBER: 1
   PROJECT_FIELD: "Priority"
   ORGANIZATION: "johns-test-org"
@@ -67,6 +67,7 @@ jobs:
           echo 'THE_ID='$(jq '.data.node.projectItems.nodes[].project.number' project_data.json) >> $GITHUB_ENV
           echo 'BOOL_ID='$(jq 'any(.data.node.projectItems.nodes[]; .project.number == ${{ env.PROJECT_NUMBER }})' project_data.json) >> $GITHUB_ENV
           echo "LABEL_P=${{env.LABEL_PREFIX}} b" >> $GITHUB_ENV
+          echo "CONTAINS_P=${{contains(github.event.label.name, '[Pri]')}}" >> $GITHUB_ENV
           echo $ISSUE_PROJECTS
 
       - name: Get priority
@@ -75,7 +76,7 @@ jobs:
         env:
           PRIORITY_LABEL: ${{github.event.label.name}}
         run: |
-          prefix="${{env.LABEL_PREFIX}}"
+          prefix="${{env.LABEL_PREFIX}} "
           label="${{github.event.label.name}}"
           priority=${label#"$prefix"}
           echo "PRIORITY_LABEL=$priority" >> $GITHUB_ENV
@@ -84,6 +85,7 @@ jobs:
           echo $THE_ID
           echo $BOOL_ID
           echo $LABEL_P
+          echo $CONTAINS_P
 
       - name: Update project field
         id: update_project_field
