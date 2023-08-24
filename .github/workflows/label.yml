@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
 
     #Unfortuantely, I can't use the environment variable here
-    if:  contains(github.event.label.name, '[Pri]')
+    
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -38,6 +38,7 @@ jobs:
           private_key: ${{ secrets.APP_PEM }} 
 
       - name: Check if issue is in project
+        if: contains(github.event.label.name, '[Pri]')
         env:
             GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
             ISSUE_ID: ${{ github.event.issue.node_id }}
