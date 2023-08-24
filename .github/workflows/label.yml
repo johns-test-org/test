@@ -1,35 +1,26 @@
-# Updates the Priority field on a Project board when a [Pri] label gets added to an issue.
+name: Update Project Field to Match Label
 
-name: Keep priority labels in sync
-
-# Controls when the workflow will run
+# Triggers the workflow when a label is added to an issue.
 on:
-  # Triggers the workflow when labels are added to an issue
   issues:
     types:
       - labeled
 
+# Details needed to update a project field.
 env:
-  LABEL_PREFIX: "[Pri]"
-  PROJECT_NUMBER: 1
-  PROJECT_FIELD: "Priority"
   ORGANIZATION: "johns-test-org"
+  PROJECT_NUMBER: 1
+  PRIORITY_PREFIX: "[Pri]"
+  PRIORITY_FIELD: "Priority"
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
-  # Updates the Priority field with the appropriate priority level
-  check_priority: 
-
-    # The type of runner that the job will run on
+  # Updates project fields to match label changes.
+  update_project_field: 
     runs-on: ubuntu-latest
-
-    #Unfortuantely, I can't use the environment variable here
-    
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     
+      # Generate a token for the GitHub App, which has special permissions to update projects.
       - name: Generate token
         id: generate_token
         uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92
@@ -37,10 +28,12 @@ jobs:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PEM }} 
 
+      # Checks if the issue is already in the project. If not, the next steps will be skipped.
       - name: Check if issue is in project
         env:
-            GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
-            ISSUE_ID: ${{ github.event.issue.node_id }}
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+          ISSUE_ID: ${{ github.event.issue.node_id }}
+        # Iterates through an issue's projects and looks for a match on the project number.
         run: |
           gh api graphql -f query='
             query($id: ID!){
@@ -62,41 +55,27 @@ jobs:
                 }
               }
             }' -f id=$ISSUE_ID > project_data.json
-          cat project_data.json
-          echo 'ISSUE_PROJECTS='$(jq '.data.node.projectItems.nodes' project_data.json) >> $GITHUB_ENV
-          echo 'THE_ID='$(jq '.data.node.projectItems.nodes[].project.number' project_data.json) >> $GITHUB_ENV
-          echo 'BOOL_ID='$(jq 'any(.data.node.projectItems.nodes[]; .project.number == ${{ env.PROJECT_NUMBER }})' project_data.json) >> $GITHUB_ENV
-          echo "LABEL_P=${{env.LABEL_PREFIX}} b" >> $GITHUB_ENV
-          echo "CONTAINS_P=${{contains(github.event.label.name, '[Pri]')}}" >> $GITHUB_ENV
-          echo $ISSUE_PROJECTS
+          echo 'ISSUE_IN_PROJECT='$(jq 'any(.data.node.projectItems.nodes[]; .project.number == ${{ env.PROJECT_NUMBER }})' project_data.json) >> $GITHUB_ENV
 
-      - name: Get priority
-        id: get_priority
-        if: contains(github.event.label.name, env.LABEL_PREFIX) && env.BOOL_ID == 'true'
-        env:
-          PRIORITY_LABEL: ${{github.event.label.name}}
+      # Get the value of the label by removing the prefix.
+      - name: Get label value
+        if: contains(github.event.label.name, env.PRIORITY_PREFIX) && env.ISSUE_IN_PROJECT == 'true'
         run: |
-          prefix="${{env.LABEL_PREFIX}} "
+          prefix="${{env.PRIORITY_PREFIX}} "
           label="${{github.event.label.name}}"
-          priority=${label#"$prefix"}
-          echo "PRIORITY_LABEL=$priority" >> $GITHUB_ENV
-          echo $PRIORITY_LABEL
-          echo $ISSUE_PROJECTS
-          echo $THE_ID
-          echo $BOOL_ID
-          echo $LABEL_P
-          echo $CONTAINS_P
+          value=${label#"$prefix"}
+          echo "PRIORITY_VALUE=$value" >> $GITHUB_ENV
 
+      # Update the corresponding project field with the label value.
       - name: Update project field
-        id: update_project_field
-        if: contains(github.event.label.name, '[Pri]') && env.BOOL_ID == 'true'
+        if: contains(github.event.label.name, '[Pri]') && env.ISSUE_IN_PROJECT == 'true'
         uses: github/update-project-action@v2
         with:
           github_token: ${{ steps.generate_token.outputs.token }}
           organization: ${{ env.ORGANIZATION }}
           project_number: ${{ env.PROJECT_NUMBER }}
-          field: ${{ env.PROJECT_FIELD }}
+          field: ${{ env.PRIORITY_FIELD }}
           content_id: ${{ github.event.issue.node_id }}
-          value: ${{ env.PRIORITY_LABEL }}
+          value: ${{ env.PRIORITY_VALUE }}
           
       
