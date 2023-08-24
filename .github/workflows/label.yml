@@ -53,8 +53,8 @@ jobs:
               }`
   
             const variables = {
-                projectId: "${{inputs.projectId}}"
-                contentId: "${{inputs.issueId}}"
+                projectId: "${{ env.PROJECT_NUMBER }}"
+                contentId: "${{ github.event.issue.node_id }}"
               };
             const result = await github.graphql(query, variables);
             core.info(`addProjectV2ItemById result: ${JSON.stringify(result)}`);
