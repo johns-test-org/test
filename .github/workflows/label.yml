@@ -72,7 +72,7 @@ jobs:
 
       - name: Get priority
         id: get_priority
-        # if: contains(github.event.label.name, env.LABEL_PREFIX) && env.BOOL_ID == true
+        if: contains(github.event.label.name, env.LABEL_PREFIX) && env.BOOL_ID == 'true'
         env:
           PRIORITY_LABEL: ${{github.event.label.name}}
         run: |
