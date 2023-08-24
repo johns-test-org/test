@@ -62,6 +62,7 @@ jobs:
                 }
               }
             }' -f id=$ISSUE_ID > project_data.json
+          cat project_data.json
 
       - name: Get priority
         id: get_priority
