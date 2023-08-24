@@ -11,7 +11,7 @@ on:
 
 env:
   LABEL_PREFIX: "[Pri] "
-  PROJECT_NUMBER: 1
+  PROJECT_NUMBER: 10
   PROJECT_FIELD: "Priority"
   ORGANIZATION: "johns-test-org"
 
